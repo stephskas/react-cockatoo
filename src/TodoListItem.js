@@ -4,7 +4,7 @@ import './App.css'
 function TodoListItem({ todo, onRemoveTodo }) {
   return (
     <>
-      <li key={todo.key}>
+      <li>
         {todo.title}
         <button onClick={() => onRemoveTodo(todo.id)}>Remove</button>
       </li>
