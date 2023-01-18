@@ -5,7 +5,18 @@ import TodoList from "./TodoList";
 function App() {
 	const [todoList, setTodoList] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-
+	/* 
+  API data retrieved is in format {
+    "records": [
+        {
+            "id": "recec6UrkyT2MTAay",
+            "createdTime": "2022-03-26T19:34:32.000Z",
+            "fields": {
+                "Title": "Study React"
+            }
+        },
+      ]
+  */
 	useEffect(() => {
 		const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/Default`;
 		try {
@@ -15,8 +26,7 @@ function App() {
 				},
 			})
 				.then((result) => result.json())
-				.then((result) => setTodoList(result.records))
-				.then((result) => console.log(url));
+				.then((result) => setTodoList(result.records));
 			setIsLoading(false);
 		} catch (error) {
 			console.log(error.message);
