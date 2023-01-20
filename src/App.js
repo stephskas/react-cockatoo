@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import AddTodoForm from "./AddTodoForm";
-import TodoList from "./TodoList";
-=======
 import React, { useState, useEffect } from 'react';
 import AddTodoForm from './AddTodoForm';
 import TodoList from './TodoList';
->>>>>>> 9a3020edc587d40bfe1ab43f92872055b5c0313f
 
 function App() {
 	const [todoList, setTodoList] = useState([]);
