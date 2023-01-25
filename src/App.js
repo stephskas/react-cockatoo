@@ -20,6 +20,7 @@ function App() {
 		} catch (error) {
 			console.log(error.message);
 		}
+
 	}, []);
 
 	const addTodo = (newTodo) => {
@@ -35,7 +36,9 @@ function App() {
 		if (!isLoading) {
 			localStorage.setItem("savedTodoList", JSON.stringify(todoList));
 		}
+
 	}, [todoList, isLoading]);
+
 
 	return (
 		<>
