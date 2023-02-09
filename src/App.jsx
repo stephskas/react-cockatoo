@@ -93,7 +93,7 @@ function App() {
 		try {
 			await fetch(url + completedTodoID, {
 				method: 'PATCH',
-				// muteHttpExceptions: true,
+				muteHttpExceptions: true,
 				headers: {
 					Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
 					'Content-Type': 'application/json',
@@ -106,7 +106,6 @@ function App() {
 				}),
 			});
 			loadTodos();
-			console.log(todoList);
 		} catch (error) {
 			console.error(error);
 		}

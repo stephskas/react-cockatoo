@@ -9,7 +9,6 @@ const TodoList = ({
 	loadTodos,
 }) => {
 	const todosCompleted = todoList.filter((todo) => todo.completed === true);
-	console.log('todosCompleted', todosCompleted);
 	return (
 		<>
 			<ul>
@@ -21,7 +20,8 @@ const TodoList = ({
 						onRemoveTodo={onRemoveTodo}
 						isMuted={isMuted}
 						numberOfTodosLeft={todoList.length}
-						numberOfTodosCompleted={todosCompleted.length}
+						numberOfTodosCompleted={todosCompleted.length + 1}
+						todoList={todoList}
 						loadTodos={loadTodos}
 					/>
 				))}
