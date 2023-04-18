@@ -14,19 +14,19 @@ const TodoContextProvider = ({ children }) => {
 	const [todoTitle, setTodoTitle] = useState('');
 	const [isMuted, setIsMuted] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [isDarkMode, setIsDarkMode] = useState(false);
 	const [sortOrder, setSortOrder] = useState('asc');
 	const [sortType, setSortType] = useState('timeSort');
 
-	const airTableName = 'Todos';
-	const airTableView = '?view=Grid%20view';
-	const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${airTableName}/`;
+	const AIRTABLE_TABLE_NAME = 'Todos';
+	const AIRTABLE_VIEW = '?view=Grid%20view';
+	const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}/`;
 	const isMounted = useRef(false);
 
 	// LOAD TODOS
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const loadTodos = useCallback(async () => {
 		try {
-			const response = await fetch(url + airTableView, {
+			const response = await fetch(url + AIRTABLE_VIEW, {
 				headers: {
 					Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_API_KEY}`,
 				},
@@ -110,7 +110,6 @@ const TodoContextProvider = ({ children }) => {
 					},
 				}),
 			});
-			console.log(todoList);
 			loadTodos();
 		} catch (error) {
 			console.error(error);
@@ -152,13 +151,19 @@ const TodoContextProvider = ({ children }) => {
 		setSortType(type);
 		setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
 	};
+	// TOGGLE DARK/LIGHT MODE
+	useEffect(() => {
+		document.documentElement.dataset.theme = isDarkMode ? 'dark' : 'light';
+	}, [isDarkMode]);
 
 	const contextValues = {
 		todoList,
 		todoTitle,
 		isMuted,
 		isLoading,
+		isDarkMode,
 		setIsMuted,
+		setIsDarkMode,
 		setTodoList,
 		setTodoTitle,
 		loadTodos,

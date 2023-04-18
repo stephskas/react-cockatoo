@@ -1,9 +1,10 @@
 
 .ulStyle {
   list-style-type: none;
-  margin: 25px 20px 20px 30px;
+  margin: 25px 20px 20px 0;
   padding: 0 40px;
   align-items: left;
+  min-height: 600px;
 }
 /* Tablet viewport */
 @media screen and (min-width: 521px) and (max-width: 1024px) {
@@ -16,6 +17,6 @@
   .ulStyle {
      min-width: 300px;
      margin: 20px 0px;
-     padding: 10px 0 0px 10px;
+     padding: 10px 20px 0 20px;
   }
 }
