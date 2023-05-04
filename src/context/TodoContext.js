@@ -21,7 +21,7 @@ const TodoContextProvider = ({ children }) => {
 	const AIRTABLE_TABLE_NAME = 'Todos';
 	const AIRTABLE_VIEW = '?view=Grid%20view';
 	const url = `https://api.airtable.com/v0/${process.env.REACT_APP_AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}/`;
-	const isMounted = useRef(false);
+	// const isMounted = useRef(false);
 
 	// LOAD TODOS
 	const loadTodos = useCallback(async () => {
@@ -46,19 +46,20 @@ const TodoContextProvider = ({ children }) => {
 	}, [url]);
 
 	// GET TODOS FROM (AIRTABLE) DB
+	// useEffect(() => {
+	// 	isMounted.current ? loadTodos() : (isMounted.current = true);
+	// }, [loadTodos]);
 	useEffect(() => {
-		isMounted.current ? loadTodos() : (isMounted.current = true);
+		loadTodos();
 	}, [loadTodos]);
 
 	// FORMAT TODOS
 	const formatTodos = (todoList) => {
 		const updatedTodoList = todoList.map((item) => {
-			const currentDate = item.createdTime.split('T');
 			const todo = {
 				title: item.fields.Title,
 				id: item.id,
-				date: currentDate[0],
-				time: currentDate[1].split('.')[0],
+				date: item.createdTime,
 				completed: item.fields.Completed || false,
 			};
 			return todo;
@@ -141,8 +142,17 @@ const TodoContextProvider = ({ children }) => {
 			sorted = todoList.sort((a, b) =>
 				a.title.toLowerCase().localeCompare(b.title)
 			);
+			console.log(sorted);
 		} else if (type === 'timeSort') {
-			sorted = todoList.sort((a, b) => a.time - b.time);
+			console.log(todoList);
+			sorted = todoList.sort((a, b) => {
+				const dateA = new Date(`${a.date}`);
+				const dateB = new Date(`${b.date}`);
+				if (dateA.getTime() === dateB.getTime()) {
+					return 0;
+				}
+				return dateA.getTime() - dateB.getTime();
+			});
 		}
 		if (sortOrder === 'desc') {
 			sorted.reverse();
